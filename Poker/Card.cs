@@ -6,21 +6,20 @@ using System.Threading.Tasks;
 
 namespace Poker
 {
-    enum HandType
+    public enum HandType
     {
         HighCard,
-
         Pair,
         TwoPair,
         ThreeOfAKind,
         Straight, //5 consecutive numbers
-        Flush, //all same suit
+        Flush, //all same suit, rank doesn't matter
         FullHouse, //2 of a kind, 3 of a kind
         FourOfAKind,
-        StraightFlush //Same suit, straight
+        StraightFlush //Same suit, 5 consecutive numbers
     }
 
-    enum Suit
+    public enum Suit
     { 
         Club,
         Diamond,
@@ -28,7 +27,7 @@ namespace Poker
         Spade
     }
 
-    enum Rank
+    public enum Rank
     {
         Ace,
         Two,
@@ -48,19 +47,16 @@ namespace Poker
 
     public class Card: IComparable<Card> 
     {
-        public Rank Rank { get;
-            set; }
+        public Rank Rank { get; set; }
         public Suit Suit { get; set; }
 
         public Card(Rank rank, Suit suit)
         {
-            rank = this.Rank;
-            suit = this.Suit;
+            this.Rank = rank;
+            this.Suit = suit;
         }
 
-
-
-        static void Play()
+        /* static void Play()
         {
             //Get one set of cards
             //Get another set of cards
@@ -83,11 +79,45 @@ namespace Poker
         {
             //if (IsStraightFlush(card))
                 return HandType.StraightFlush;
-        }
+        }*/
 
         public int CompareTo(Card other)
         {
-            throw new NotImplementedException();
+            //1 = first element greater
+            //0 = elements are equal
+            //-1 = first element smaller
+            //Flush - all same suit
+            if (this.Rank > other.Rank) { return 1; }
+            if (this.Rank == other.Rank) { return 0; }
+            if (this.Rank < other.Rank) { return -1; }
+
+            return 0;
+            //throw new NotImplementedException();
         }
-    }
+        
+        public static bool IsFlush(Card[] hand)
+        {
+            //All cards are same suit
+            for (int i = 0; i < hand.Length - 1;)
+            {
+                if (hand[i].Suit == hand[i + 1].Suit) i++;
+                else return false;
+            }
+            return true;
+        }
+
+        public static bool IsStraight(Card[] hand)
+        {
+            //Cards are in sequential order
+            for (int i = 0; i < hand.Length - 1;)
+            {
+                if (hand[i].Rank + 1 == hand[i + 1].Rank) i++;
+                else return false;
+            }
+
+            //bool result = IsFlush(hand);
+            return IsFlush(hand);
+        }
+
+        }
 }

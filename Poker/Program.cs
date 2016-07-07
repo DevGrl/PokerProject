@@ -11,14 +11,30 @@ namespace Poker
         
         static void Main(string[] args)
         {
-            Card[] hand = new Card[2];
-            hand[0] = new Card(Rank.Ace, Suit.Club);
-            hand[1] = new Card(Rank.Four, Suit.Diamond);
-
-            Console.Read();
-            
+            GetCards();            
         }
 
+        static void GetCards()
+        {
+            Card[] hand = new Card[3];
+            hand[0] = new Card(Rank.Five, Suit.Club);
+            hand[1] = new Card(Rank.Four, Suit.Club);
+            hand[2] = new Card(Rank.Three, Suit.Club);
+
+            Array.Sort(hand);
+
+            foreach (var item in hand)
+            {
+                Console.WriteLine(item.Rank);
+            }
+
+            Console.WriteLine("IsStraight: " + Card.IsStraight(hand));
+            Console.WriteLine("IsFlush: " + Card.IsFlush(hand));
+            
+
+            Console.Read();
+
+        }
         
     }
 }
