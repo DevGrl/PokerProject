@@ -9,6 +9,7 @@ namespace Poker
     enum HandType
     {
         HighCard,
+
         Pair,
         TwoPair,
         ThreeOfAKind,
