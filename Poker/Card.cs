@@ -145,21 +145,34 @@ namespace Poker
                 }
             }
 
+            //If max value = 3 and contains value = 2, then FullHouse
+            //max value = 3, 3 of a kind
+            //contains value = 4, 4 of a kind
+            //max value = 2, pair
+
             //Get the two largest values from cardNumbers
-            int mainMaxValue = cardNumbers.Values.Max();
+            int maxValue = cardNumbers.Values.Max();
             
-            int secMaxValue = cardNumbers.Values.Max();
-            Console.WriteLine(mainMaxValue);
+            
+            Console.WriteLine(maxValue);
 
             HandType type = new HandType();
-            switch (mainMaxValue)
+            switch (maxValue)
             {
                 case 2:
                     type = HandType.Pair;
                     break;
                 case 3:
-                    type = HandType.ThreeOfAKind;
-                    break;
+                    
+                    if (cardNumbers.ContainsValue(2))
+                    {
+                        type = HandType.FullHouse;
+                    }
+                    else
+                    {
+                        type = HandType.ThreeOfAKind;
+                    }
+                        break;
                 case 4:
                     type = HandType.FourOfAKind;
                     break;

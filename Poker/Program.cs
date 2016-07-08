@@ -16,10 +16,12 @@ namespace Poker
 
         static void GetCards()
         {
-            Card[] hand = new Card[3];
-            hand[0] = new Card(Rank.Five, Suit.Club);
+            Card[] hand = new Card[5];
+            hand[0] = new Card(Rank.Five, Suit.Spade);
             hand[1] = new Card(Rank.Five, Suit.Club);
             hand[2] = new Card(Rank.Five, Suit.Heart);
+            hand[3] = new Card(Rank.Two, Suit.Heart);
+            hand[4] = new Card(Rank.Two, Suit.Spade);
 
             Array.Sort(hand);
 
