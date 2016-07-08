@@ -18,8 +18,8 @@ namespace Poker
         {
             Card[] hand = new Card[3];
             hand[0] = new Card(Rank.Five, Suit.Club);
-            hand[1] = new Card(Rank.Four, Suit.Club);
-            hand[2] = new Card(Rank.Three, Suit.Club);
+            hand[1] = new Card(Rank.Five, Suit.Club);
+            hand[2] = new Card(Rank.Five, Suit.Heart);
 
             Array.Sort(hand);
 
@@ -28,8 +28,10 @@ namespace Poker
                 Console.WriteLine(item.Rank);
             }
 
-            Console.WriteLine("IsStraight: " + Card.IsStraight(hand));
-            Console.WriteLine("IsFlush: " + Card.IsFlush(hand));
+            //Console.WriteLine("IsStraight: " + Card.IsStraight(hand));
+            //Console.WriteLine("IsStraightFlush: " + Card.IsStraightFlush(hand));
+            //Console.WriteLine("IsFlush: " + Card.IsFlush(hand));
+            Console.WriteLine("OfAKind: " + Card.OfAKind(hand));
             
 
             Console.Read();

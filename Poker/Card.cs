@@ -107,6 +107,17 @@ namespace Poker
         }
 
         public static bool IsStraight(Card[] hand)
+        {             
+            return CheckStraight(hand);           
+        }
+
+        public static bool IsStraightFlush(Card[] hand)
+        {
+            bool result = CheckStraight(hand) ? IsFlush(hand) : false;
+            return result;
+        }
+
+        public static bool CheckStraight(Card[] hand)
         {
             //Cards are in sequential order
             for (int i = 0; i < hand.Length - 1;)
@@ -115,8 +126,48 @@ namespace Poker
                 else return false;
             }
 
-            //bool result = IsFlush(hand);
-            return IsFlush(hand);
+            return true;
+        }
+
+        public static HandType OfAKind(Card[] hand)
+        {
+            Dictionary<Rank, int> cardNumbers = new Dictionary<Rank, int>();
+            
+            for (int i = 0; i <= hand.Length-1; i++)
+            {
+                if (cardNumbers.ContainsKey(hand[i].Rank))
+                {
+                    cardNumbers[hand[i].Rank] += 1;
+                }
+                else
+                {
+                    cardNumbers.Add(hand[i].Rank, 1);
+                }
+            }
+
+            //Get the two largest values from cardNumbers
+            int mainMaxValue = cardNumbers.Values.Max();
+            
+            int secMaxValue = cardNumbers.Values.Max();
+            Console.WriteLine(mainMaxValue);
+
+            HandType type = new HandType();
+            switch (mainMaxValue)
+            {
+                case 2:
+                    type = HandType.Pair;
+                    break;
+                case 3:
+                    type = HandType.ThreeOfAKind;
+                    break;
+                case 4:
+                    type = HandType.FourOfAKind;
+                    break;
+                default:
+                    type = HandType.HighCard;
+                    break;
+            }
+            return type;
         }
 
         }
