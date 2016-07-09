@@ -129,7 +129,7 @@ namespace Poker
             return true;
         }
 
-        public static HandType OfAKind(Card[] hand)
+        public static void OfAKind(Card[] hand, out Rank mainRank, out Rank secondaryRank)
         {
             Dictionary<Rank, int> cardNumbers = new Dictionary<Rank, int>();
             
@@ -145,42 +145,57 @@ namespace Poker
                 }
             }
 
-            //If max value = 3 and contains value = 2, then FullHouse
-            //max value = 3, 3 of a kind
-            //contains value = 4, 4 of a kind
-            //max value = 2, pair
+            //if max value = 3 and cardNumbers contains value = 2, then FullHouse
+            //if max value = 3, then 3 of a kind
+            //if max value = 4, then 4 of a kind
+            //if max value = 2, a pair
+            //default is high card
 
             //Get the two largest values from cardNumbers
-            int maxValue = cardNumbers.Values.Max();
-            
-            
-            Console.WriteLine(maxValue);
-
+            int maxValue = cardNumbers.Values.Max();                        
+            Rank mRank, sRank = new Rank();
             HandType type = new HandType();
+            mRank = cardNumbers.FirstOrDefault(x => x.Value == maxValue).Key;
+
             switch (maxValue)
             {
                 case 2:
                     type = HandType.Pair;
                     break;
                 case 3:
-                    
-                    if (cardNumbers.ContainsValue(2))
+                    if(cardNumbers.ContainsValue(2))
                     {
-                        type = HandType.FullHouse;
+                         type = HandType.FullHouse;
+                         sRank = cardNumbers.FirstOrDefault(x => x.Value == 2).Key;
                     }
                     else
                     {
                         type = HandType.ThreeOfAKind;
-                    }
-                        break;
+                    }                    
+                    break;
                 case 4:
                     type = HandType.FourOfAKind;
                     break;
                 default:
                     type = HandType.HighCard;
+                    //High cards is the card where the enum value of the Rank is highest
+                    //or get the value of the last card in the hand
+                     //mRank = Enum.GetValues(typeof(Rank)).Cast<Rank>().Max();
+                    mRank = hand[hand.Length - 1].Rank;
                     break;
+            }//end switch
+
+            mainRank = mRank;
+            secondaryRank = sRank;
+            if (type == HandType.FullHouse)
+            {
+                Console.WriteLine("You have a {0} of (3){1} and (2){2}", type, mRank, sRank);
             }
-            return type;
+            else
+            {
+                Console.WriteLine("You have a {0} of {1}", type, mRank);
+            }
+            
         }
 
         }
